@@ -1,0 +1,4 @@
+
+input[name='race']:checked + label{
+    visibility: hidden;
+}
