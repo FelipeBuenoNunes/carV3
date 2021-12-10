@@ -1,4 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=McLaren&display=swap');
 
-input[name='race']:checked + label{
+
+*{
+    border: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'McLaren', cursive;
+}
+
+main{
+    background: url(https://www.cidadeecultura.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2020/10/maluca-740x416-af8bed4e.jpg.webp);
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: 30%;
+}
+
+h1{
+    font-size: clamp(1.5em, 0.5em + 1.8vw, 3em);
+    margin-top: 3%;
+    text-align: center; 
+}
+
+main > div{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 5%;
+    font-size: clamp(1em, 0.5em + 1.5vw, 2em);
+    color: rgb(1, 1, 83);
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label{
+    transition: 500ms;
+    cursor: pointer;
+}
+
+label:hover{
+    font-size: 1.01em;
+}
+
+input[type = "radio"]:checked + label{
+    color: rgb(197, 0, 0);
+}
+
+button{
+    font-family: 'Bebas Neue', cursive;
+    font-size: 0.8em;
+    width: 50%;
+    height: 5vh;
+    border-radius: 0.5vw;
+    margin-top: 10%;
+    transition: 500ms;
+    background-color: rgb(3, 3, 146);
+    color: white;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: rgb(3, 3, 250);
+}
+
+input{
     visibility: hidden;
 }
+
+main > div > article{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form + article{
+    border-radius: 0.8vw;
+    gap: 5%;
+    padding: 1%;
+    border: 1px solid black;
+}
+
+span{
+    color: rgb(129, 26, 26);
+}
+
+section{
+    margin-top: 5%;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    text-align: center;
+    font-size: clamp(1em, 0.5em + 1.5vw, 2em);
+}
+
+section > span {
+    font-size: 1.2em;
+}
+
+section > div{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 600px) {
+    body{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    main{
+        background: url();
+    }
+    main > div {
+        display: flex;
+        justify-content: center;
+        align-self: center;
+    }
+  }

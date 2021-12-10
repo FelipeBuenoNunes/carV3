@@ -39,6 +39,7 @@ const arrPilots = [];
 arrNamePilots.forEach(
     function (element, index){
         let obj = new Object();
+        obj.namePilot = arrNamePilots[index];
         obj.winnersLap = 0;
         obj.winnersRace = 0;
         obj.xp = 0;
@@ -46,6 +47,7 @@ arrNamePilots.forEach(
         arrPilots[index] = obj;
     }
 );
+
 function createCarsPilots(){
     arrPilots.forEach(
         function(element){
@@ -60,9 +62,9 @@ function createCarsPilots(){
 }
 
 //Função que gera o random para cada volta
-function winnerForLap(velMax, velMin, skid){
-    speedMax = attRandom(velMax.min, velMax.max);
-    speedMin = attRandom(velMin.min, velMin.max);
+function winnerForLap(velMax, velMin, skid, lvl){
+    speedMax = attRandom(velMax.min + velMax.min * lvl, velMax.max + velMax.max * lvl);
+    speedMin = attRandom(velMin.min + velMin.min * lvl, velMin.max + velMin.max * lvl);
     skid  = attRandom(skid.min, skid.max);
     return (Math.random() * (speedMax - speedMin) + speedMin) * skid;
 }
@@ -70,17 +72,15 @@ function attRandom(min, max){
     return Math.random() * (max - min) + min;
 }
 
-function runLaps(){
-    const nLaps = document.querySelector("input[name='race']:checked").value;
-
-    createCarsPilots();
+function winLap(nLaps){
     for(let i = 0; i < nLaps; i++){
         let winnerLapId = 0;
         let speed = 0;
         arrPilots.forEach(
             (element, index) => {
                 const {velMax, velMin, skid} = element; 
-                const randSpeed = winnerForLap(velMax, velMin, skid);
+                element.level = (element.level >= 10 ? 10 : element.level);
+                const randSpeed = winnerForLap(velMax, velMin, skid, element.level / 100);
                 if(randSpeed > speed){
                     speed = randSpeed;
                     winnerLapId = index;
@@ -89,6 +89,90 @@ function runLaps(){
         );
         arrPilots[winnerLapId].winnersLap++;
     }
+}
+
+function winForRace(){
+    const arrWinnerPilots = [];
+    arrPilots.forEach(
+        (element) =>{
+            arrWinnerPilots.push(element.winnersLap);
+        });
+    let contPosition = 0;
+    let contPrint = 0;
+    do{
+        let maior = 0
+        let id;
+        contPrint++;
+        arrWinnerPilots.forEach(
+            (element, index) => {
+                if(element > maior){
+                    maior = element;
+                    id = index;
+                }
+            }
+        );
+        arrWinnerPilots[id] = 0;
+        addXp(contPosition, id);
+        print(arrPilots[id], contPrint);
+        contPosition++;
+    }while(arrWinnerPilots.length > contPosition);
+}
+
+function addXp(cont, id){
+    let whatRace = (nLaps == 10 ? "rapida" : nLaps == 60 ? "granPrix" : "enduro");
+    arrPilots[id].winnersRace = (cont == 0 ? arrPilots[id].winnersRace + 1 : arrPilots[id].winnersRace);
+    if(arrPilots[id].level == 10)
+        return null;
+    arrPilots[id].xp += xpForRace[whatRace][cont];
+    arrPilots[id]
+}
+
+const xpForRace = {
+    "rapida": [ 200, 120, 50 ],
+    "granPrix": [ 220, 130, 75 ],
+    "enduro": [ 250, 150, 90 ]   
+};
+
+let nLaps;
+function runLaps(){
+    nLaps = document.querySelector("input[name='race']:checked").value;
+    document.getElementById("volta").innerHTML = "";
+    createCarsPilots();
+    winLap(nLaps);
+    winForRace();
+    atualizaLvl();
     console.log(arrPilots);
 }
 
+function atualizaLvl(){
+    arrPilots.forEach(
+        (element) => {
+            element.level = parseInt(element.xp/450) + 1;
+        });    
+}
+
+function print(arr, id){
+    let tagsP = document.getElementById("volta");
+    let newP = document.createElement("p");
+    newP.innerText = id + "--" + arr.namePilot + " | " + arr.carName + " | " + arr.winnersLap + " Voltas ganhas";
+    tagsP.appendChild(newP);
+    printAll();
+}
+
+const printRace = document.querySelectorAll("#race > p");
+
+function printAll(){
+    const ordPilots = [];
+    arrPilots.forEach((element, index) => { ordPilots.push(element.winnersRace + " " + index); } );
+    ordPilots.sort(function(a,b) {
+        a = parseInt(a.split(" ")[0]);
+        b = parseInt(b.split(" ")[0]);
+        return a < b ? 1 : a > b ? -1 : 0;
+    })
+    console.log(ordPilots)
+    ordPilots.forEach(
+        (element, index) => {
+            const pilot = arrPilots[element.split(" ")[1]];
+            printRace[index].innerText = index+1 + "-- " + pilot.namePilot + " | " + element.split(" ")[0] + " Vitórias | Nível " + pilot.level;
+        })
+}

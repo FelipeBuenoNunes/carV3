@@ -8,15 +8,48 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form>
-        <input value="10" name="race" type="radio" id="fast" />
-        <label for="fast">Corrida Rápida(10 Voltas)</label>
-        <input value="70" name="race" type="radio" id="grand" />
-        <label for="grand">Grande Prêmio(70 Voltas)</label>
-        <input value="160" name="race" type="radio" id="enduro" />
-        <label for="enduro">Enduro(160 Voltas)</label>
-    </form>    
-    <button type="button" onclick="runLaps()">Correr</button>
+    <h1>Corrida Maluca</h1>
+    <main>
+        <div>
+            <form>
+                <input value="10" name="race" type="radio" id="fast" />
+                <label for="fast">Corrida Rápida(10 Voltas)</label>
+                <input value="70" name="race" type="radio" id="grand" />
+                <label for="grand">Grande Prêmio(70 Voltas)</label>
+                <input value="160" name="race" type="radio" id="enduro" />
+                <label for="enduro">Enduro(160 Voltas)</label>
+                <button type="button" onclick="runLaps()">Correr</button>
+            </form>
+            
+            <article>
+                <span>Pilotos da corrida</span>
+                <p>Edna</p>
+                <p>Pedro</p>
+                <p>Juca</p>
+            </article>
+        </div>
+    </main>
+    <section>
+        <span>Vencedores</span>
+        <div>
+            <article>
+                <span>Da volta</span>
+                <div id="volta">
+                    <p>Pedro | Raridade | 0 Voltas Ganhas</p>
+                    <p>Edna | Raridade | 0 Voltas Ganhas</p>
+                    <p>Juca | Raridade | 0 Voltas Ganhas</p>
+                </div>
+            </article>
+            <article>
+                <span>Corrida inteira</span>
+                <div id="race">
+                    <p>Pedro | 0 Vitórias | Nível 0</p>
+                    <p>Edna | 0 Vitórias | Nível 0</p>
+                    <p>Juca | 0 Vitórias | Nível 0</p>
+                </div>
+            </article>
+        </div>
+    </section>
     <script src="script.js"></script>
 </body>
 </html>
